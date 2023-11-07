@@ -1,9 +1,10 @@
 package menu;
 
 import java.awt.EventQueue;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import game.Game;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -81,12 +82,12 @@ public class MainMenu extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-	/*	
+	
 		if (e.getSource() == btnplayer) {
             new Game();
             frame.setVisible(false);
 
-        }*/
+        }
         if (e.getSource() == btnobserver) {
             ObserverMenu newObserver = ObserverMenu.getInstance();
             frame.setVisible(false);
