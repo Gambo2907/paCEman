@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/User/Desktop/Servidor/cmake-build-debug",
-		"source" : "C:/Users/User/Desktop/Servidor"
+		"build" : "C:/Users/User/Documents/GitHub/paCEman/Servidor/cmake-build-debug",
+		"source" : "C:/Users/User/Documents/GitHub/paCEman/Servidor"
 	},
 	"version" : 
 	{

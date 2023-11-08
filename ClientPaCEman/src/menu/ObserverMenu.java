@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import Observer.ObserverGame;
+
 public class ObserverMenu extends JFrame implements ActionListener {
 	
 	public JFrame mFrame;
@@ -88,14 +90,14 @@ public class ObserverMenu extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
-		/*if (e.getSource() == obsPlayer1) {
+		if (e.getSource() == obsPlayer1) {
             new ObserverGame(1);
             mFrame.setVisible(false);
         }
         if (e.getSource() == obsPlayer2) {
             new ObserverGame(2);
             mFrame.setVisible(false);
-        }*/
+        }
         if (e.getSource() == backBtn) {
             MainMenu.getInstance();
             mFrame.setVisible(false);

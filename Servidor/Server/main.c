@@ -6,6 +6,7 @@
 
 
 
+
 int select_player() {
     int player;
     printf("Seleccione jugador:\n");
@@ -14,10 +15,17 @@ int select_player() {
         printf("Solo puede escoger entre los numeros 1 y 2\n");
         select_player();
     } else {
+        //ingame == {0, 3, true};
+        //printf("%d\n", ingame.lives);
         return player;
+
     }
     return 0;
 }
+
+
+
+
 
 struct position set_position() {
     struct position pos;
@@ -36,6 +44,7 @@ struct position set_position() {
         return pos;
     }
 }
+
 
 struct fruit add_fruit() {
     struct fruit fruit_result;
@@ -92,6 +101,7 @@ int change_speed() {
 }
 
 void select_menu(int player) {
+
     int select;
     printf("Ingrese un numero para definir lo que desea hacer:\n");
     printf("1) Crear fantasma\n");
@@ -147,7 +157,7 @@ void select_menu(int player) {
                 sendMessage(pill);
                 break;
             case 3:
-                struct fruit fruit_selected =  add_fruit();
+                fruit_selected =  add_fruit();
                 char points[128];
                 sprintf(points, "%d", fruit_selected.points);
                 char fruit_code[256] = {player + '0', 'F', fruit_selected.fruit_type};
@@ -174,7 +184,7 @@ void select_menu(int player) {
                 sendMessage(fruit_code);
                 break;
             case 4:
-                char speed_level = change_speed() + '0';
+                speed_level = change_speed() + '0';
                 char speed[5] = {player + '0','V', ',', speed_level, '/'};
                 printf( "%s\n", speed);
                 sendMessage(speed);
@@ -197,6 +207,7 @@ void init_console() {
 
 
 void messageReceive(char *messageType, int client){
+
     char instruction = messageType[1]; //1U,1,2
     char player = messageType[0];
     //printf("%s", "FUNCIONA");
@@ -215,7 +226,19 @@ void messageReceive(char *messageType, int client){
     }
     else if(instruction == 'U'){
 
-        sendMessage(messageType);
+        //sendMessage(messageType);
+    }
+    else if(instruction == 'D'){
+        char amountpoints[100];
+        char *start = strchr(messageType, ',');
+        char *end = strchr(messageType, '/');
+        if(start != NULL && end != NULL && end > start){
+            int length = end - start - 1;
+            strncpy(amountpoints, start+1, length);
+            int intValuePoints = strtol(amountpoints, NULL, 10);
+
+        }
+
     }
 }
 
@@ -243,6 +266,7 @@ int main()
     CreateThread(NULL, 0, serverThread, NULL, 0, &threadDescriptor); // Hilo para el servidor
 
     Sleep(1000);
+
     init_console();
     return 0;
 }

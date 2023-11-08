@@ -200,8 +200,7 @@ int start_server()
 
             // Obtiene la informacion del cliente
             getpeername(sd, (struct sockaddr *)&clientAddr, &clientAddrlen);
-            printf("Cliente conectado en: %s:%d\n",
-                   inet_ntoa(clientAddr.sin_addr), ntohs(clientAddr.sin_port));
+            printf("Cliente conectado. \n");
 
             // Añade el nuevo cliente al array si hay espacio disponible
             if (curNoClients >= MAX_CLIENTS)
@@ -222,7 +221,7 @@ int start_server()
             {
                 // Escanea la lista para añadir el cliente nuevo en un espacio desocupado
                 int i;
-                for (i = 0; i < MAX_CLIENTS; i++)
+                for (i = 1; i < MAX_CLIENTS; i++)
                 {
                     if (!clients[i])
                     {
@@ -247,7 +246,7 @@ int start_server()
         }
 
         // Itera la lista de clientes
-        for (int i = 0; i < MAX_CLIENTS; i++)
+        for (int i = 1; i < MAX_CLIENTS; i++)
         {
             if (!clients[i])
             {
@@ -264,7 +263,7 @@ int start_server()
                 {
                     // Imprime el mensaje recibido
                     recvbuf[res] = '\0';
-                    //printf("Recibido (%d): %s\n", res, recvbuf);
+                    printf("Recibido (%d): %s\n", res, recvbuf);
                     //sendRes = send(sd, recvbuf, strlen(recvbuf), 0);
 
 
@@ -282,8 +281,7 @@ int start_server()
                 {
                     // Cliente desconectado
                     getpeername(sd, (struct sockaddr *)&clientAddr, &clientAddrlen);
-                    printf("Cliente desconectado: %s:%d\n",
-                           inet_ntoa(clientAddr.sin_addr), ntohs(clientAddr.sin_port));
+                    printf("Cliente desconectado");
 
                     shutdown(sd, SD_BOTH);
                     closesocket(sd);

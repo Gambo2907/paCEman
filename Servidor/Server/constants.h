@@ -17,7 +17,7 @@
 #pragma comment(lib, "Ws2_32.lib")
 
 #define BUFLEN 512          // Tamaño del bufer
-#define PORT 8888         // Puerto de conexion
+#define PORT 19200         // Puerto de conexion
 #define ADDRESS "127.0.0.1" // "localhost"
 #define MAX_CLIENTS 4       // Maximo de clientes simultaneos
 #define MAX_PLAYERS 2
