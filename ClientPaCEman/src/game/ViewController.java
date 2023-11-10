@@ -20,7 +20,7 @@ import Socket.Client;
 import menu.MainMenu;
 import Objects.Maps;
 
-import gnu.io.*;
+//import gnu.io.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,7 +28,7 @@ import java.io.OutputStream;
 public class ViewController extends JPanel implements ActionListener {
     private InputStream input;
     private OutputStream output;
-    private SerialPort serialPort;
+    //private SerialPort serialPort;
 
 
     GhostFactory ghostFactory = new SimpleGhostFactory();
@@ -327,8 +327,8 @@ public void readFromArduino() {
          }
          **/
         if(!stop){
-            setLivesScreen();
             if(getClientType() != 0) {
+                setLivesScreen();
             	send(getClientType() + "U"+  "," + pacman.getBoxX()+","+pacman.getBoxY() + "/");
             }
             for(Characters character: characters){
@@ -340,9 +340,9 @@ public void readFromArduino() {
                 }
                 character.move();
             }
-            verifyCollider();//Método que comprueba las diferentes colisiones del juego y toma una decición
-            eatDots();//Método que gestiona la ingesta de píldoras por parte de Comecocos
-            //Método que gestiona el fin de partida cuando Comecocos acaba con todas las píldoras
+            verifyCollider();//Método que comprueba las diferentes colisiones del juego y toma una desicion
+            eatDots();//Método que gestiona los dots comindos por parte de Pacman
+            //Método que gestiona el fin de partida cuando Pacman acaba con todos los dots
             if(dots == 0){
                 success=true;
                 endGame();
@@ -372,7 +372,7 @@ public void readFromArduino() {
     public void setLivesScreen() {
     	if(getScore()%1000 == 0 && getScore() != 0){
         	
-        	//pacman.setLives(pacman.pacmanLives() + 1);	
+        	pacman.setLives(pacman.pacmanLives() + 1);
             send(getClientType() + "L" + "," + "1");  //ENVIO DE INFO
             
         }

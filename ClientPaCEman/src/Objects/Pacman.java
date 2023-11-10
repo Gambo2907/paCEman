@@ -1,5 +1,6 @@
 package Objects;
 
+import AbstractFactory.Characters;
 
 public class Pacman extends Characters
 {
