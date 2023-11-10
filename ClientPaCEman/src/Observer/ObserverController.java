@@ -45,11 +45,11 @@ public class ObserverController extends JPanel implements ActionListener {
    
     public ObserverController(){
         //Connection
-        Client client = new Client("127.0.0.1", 8888);
+        Client client = new Client("127.0.0.1", 19200);
         this.client = client; // instantiate a client
         connect(); // client connect
         //send("O/");
-
+        
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -250,7 +250,7 @@ public class ObserverController extends JPanel implements ActionListener {
         for (int i = 0; i < pacman.pacmanLives(); i++) { // cuantas vidas tiene pacman
             ImageIcon imageIcon = new ImageIcon(this.getClass().getResource("/Resources/heart.png"));
             Image imageHeart = imageIcon.getImage();
-            g2d.drawImage(imageHeart,i*60+10,maps.sizeMapX()+770, this);
+            g2d.drawImage(imageHeart,i*60,maps.sizeMapX(), this);
         }
 
         //Opciones del método paint()
@@ -345,7 +345,6 @@ public class ObserverController extends JPanel implements ActionListener {
         //Cereza
         if(maps.getValue(pacman.getBoxX(), pacman.getBoxY()) == 4){
             maps.eatDot(pacman.getBoxX(),pacman.getBoxY());
-            send("F" + getClientType() + "C" + getCherryScore() + "/"); //ENVIO INFO
             score += getCherryScore();
             dots--;
         }
@@ -353,7 +352,7 @@ public class ObserverController extends JPanel implements ActionListener {
         //Melon
         if(maps.getValue(pacman.getBoxX(), pacman.getBoxY()) == 5){
             maps.eatDot(pacman.getBoxX(),pacman.getBoxY());
-            send("F" + getClientType() + "W" + getMelonScore() + "/"); //ENVIO INFO
+            
             score += getMelonScore();
             dots--;
         }
@@ -361,7 +360,7 @@ public class ObserverController extends JPanel implements ActionListener {
         //Manzana
         if(maps.getValue(pacman.getBoxX(), pacman.getBoxY()) == 6){
             maps.eatDot(pacman.getBoxX(),pacman.getBoxY());
-            send("F" + getClientType() + "M" + getAppleScore() + "/"); //ENVIO INFO
+            
             score += getAppleScore();
             dots--;
         }
@@ -369,7 +368,7 @@ public class ObserverController extends JPanel implements ActionListener {
         //Naranja
         if(maps.getValue(pacman.getBoxX(), pacman.getBoxY()) == 7){
             maps.eatDot(pacman.getBoxX(),pacman.getBoxY());
-            send("F" + getClientType() + "N" + getOrangeScore() + "/"); //ENVIO INFO
+            
             score += getOrangeScore();
             dots--;
         }
@@ -377,7 +376,7 @@ public class ObserverController extends JPanel implements ActionListener {
         //Fresa
         if(maps.getValue(pacman.getBoxX(), pacman.getBoxY()) == 8){
             maps.eatDot(pacman.getBoxX(),pacman.getBoxY());
-            send("F" + getClientType() + "F" + getStrawberryScore() + "/"); //ENVIO INFO
+            
             score += getStrawberryScore();
             dots--;
         }
@@ -456,7 +455,7 @@ public class ObserverController extends JPanel implements ActionListener {
                         if(!panic){
                             death.play();
                             pacman.pacmanDeath();
-                            //send("L" + getClientType() + "-/"); ENVIO DE INFO
+                            
                             if(lives == 0) {
                                 endGame();
                             }
@@ -464,7 +463,7 @@ public class ObserverController extends JPanel implements ActionListener {
                         if(panic){
                             score = score + 500;
                             eatGhost.play();
-                            // send("G"+getClientType()+"/"); ENVIO INFO
+                            
                             Ghost ghost = (Ghost)character; //Cast al personaje para declararlo de la clase Fantasmas
                             deathGhost(ghost);
                         }
@@ -664,9 +663,9 @@ public class ObserverController extends JPanel implements ActionListener {
                 setTotalGhost(1);
 
             }else if(getTotalGhost() == 3){
-                /**Creamos Inky
-                //inky = new Inky(calcX(col),calcY(row));
-                //getCharacters().add(inky);*/
+                //Creamos Inky
+                inky = new Inky(calcX(col),calcY(row));
+                getCharacters().add(inky);
                 setTotalGhost(1);
             }
 

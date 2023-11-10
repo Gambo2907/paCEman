@@ -44,7 +44,7 @@ public class ViewController extends JPanel implements ActionListener {
         this.client = client; // instantiate a client
         connect(); // client connect
         send("P/");
-        this.maps = new Maps();       
+              
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -251,7 +251,7 @@ public class ViewController extends JPanel implements ActionListener {
         if(!stop){
             setLivesScreen();
             if(getClientType() != 0) {
-                
+            	send(getClientType() + "U"+  "," + pacman.getBoxX()+","+pacman.getBoxY() + "/");
             }
             for(Characters character: characters){
                 verifyDirections(character);
@@ -590,32 +590,32 @@ public class ViewController extends JPanel implements ActionListener {
         if(fruit == 'F'){
             maps.addFruit(row,col,8);
             setStrawberryScore(value);
-            repaint();
+            
         }
         //naranja
         if(fruit == 'N'){
             maps.addFruit(row,col,7);
             setOrangeScore(value);
-            repaint();
+           
         }
         //manzana
         if(fruit == 'M'){
             maps.addFruit(row,col,6);
             setAppleScore(value);
-            repaint();
+            
         }
         //melon
         if(fruit == 'W'){
             maps.addFruit(row,col,5);
             setMelonScore(value);
-            repaint();
+            
         }
 
         //cereza
         if(fruit == 'C'){
             maps.addFruit(row,col,4);
             setCherryScore(value);
-            repaint();
+            
         }
     }
 

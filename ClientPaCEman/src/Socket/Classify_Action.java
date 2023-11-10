@@ -5,15 +5,12 @@ import game.ViewController;
 public class Classify_Action {
 
 
-    
-
+   
     public static char action,fruit,numberOfClient;
     public static int row,col,value,speed,client;
-    public static int messagePill = 0;
 
 
-    
-
+   
     public static void actionRecv(String new_sms){
 
         client = new_sms.charAt(0);
@@ -29,54 +26,20 @@ public class Classify_Action {
                 System.out.println(speed);
                 ViewController.getInstance().changeSpeed(speed); // Ejecuta el cambio de velocidad del juego
 
-            } //else if (action == 'F' || action == 'M' || action == 'G') {
-                //row = Integer.parseInt(new_sms.substring(new_sms.indexOf(',') + 1, new_sms.lastIndexOf(',')));
-                //col = Integer.parseInt(new_sms.substring(new_sms.lastIndexOf(',') + 1));
+            } else if (action == 'F' || action == 'M' || action == 'G') {
+                row = Integer.parseInt(new_sms.substring(new_sms.indexOf(',') + 1, new_sms.lastIndexOf(',')));
+                col = Integer.parseInt(new_sms.substring(new_sms.lastIndexOf(',') + 1));
 
                 if (action == 'F') {
                     fruit = new_sms.charAt(2);
-                    if(fruit == 'C') {
-                    	row = Integer.parseInt(new_sms.substring(new_sms.indexOf(',') + 1, new_sms.lastIndexOf(',')));
-                        col = Integer.parseInt(new_sms.substring(new_sms.lastIndexOf(',') + 1));
-                        value = Integer.parseInt(new_sms.substring(3, new_sms.indexOf(','))); 
-                        ViewController.getInstance().addFruit(fruit, row, col, value);
-                    }else if(fruit == 'F') {
-                    	row = Integer.parseInt(new_sms.substring(new_sms.indexOf(',') + 1, new_sms.lastIndexOf(',')));
-                        col = Integer.parseInt(new_sms.substring(new_sms.lastIndexOf(',') + 1));
-                        value = Integer.parseInt(new_sms.substring(3, new_sms.indexOf(','))); 
-                        ViewController.getInstance().addFruit(fruit, row, col, value);
-                    }else if(fruit == 'N') {
-                    	row = Integer.parseInt(new_sms.substring(new_sms.indexOf(',') + 1, new_sms.lastIndexOf(',')));
-                        col = Integer.parseInt(new_sms.substring(new_sms.lastIndexOf(',') + 1));
-                        value = Integer.parseInt(new_sms.substring(3, new_sms.indexOf(','))); 
-                        ViewController.getInstance().addFruit(fruit, row, col, value);
-                    }else if(fruit == 'M') {
-                    	row = Integer.parseInt(new_sms.substring(new_sms.indexOf(',') + 1, new_sms.lastIndexOf(',')));
-                        col = Integer.parseInt(new_sms.substring(new_sms.lastIndexOf(',') + 1));
-                        value = Integer.parseInt(new_sms.substring(3, new_sms.indexOf(','))); 
-                        ViewController.getInstance().addFruit(fruit, row, col, value);
-                    }
-                    else if(fruit == 'W') {
-                    	row = Integer.parseInt(new_sms.substring(new_sms.indexOf(',') + 1, new_sms.lastIndexOf(',')));
-                        col = Integer.parseInt(new_sms.substring(new_sms.lastIndexOf(',') + 1));
-                        value = Integer.parseInt(new_sms.substring(3, new_sms.indexOf(','))); 
-                        ViewController.getInstance().addFruit(fruit, row, col, value);
-                    }
-                     
-                     
-                } if (action == 'M') {
-                	
-                	row = Integer.parseInt(new_sms.substring(new_sms.indexOf(',') + 1, new_sms.lastIndexOf(',')));
-                	col = Integer.parseInt(new_sms.substring(new_sms.lastIndexOf(',') + 1));
+                    value = Integer.parseInt(new_sms.substring(3, new_sms.indexOf(','))); //1FC1000,
+                    ViewController.getInstance().addFruit(fruit, row, col, value); // Agrega una nueva fruta al juego
+                } else if (action == 'M') {
                     ViewController.getInstance().addPill(row, col); // Agrega una pildora en el juego
-                } if (action == 'G') {
-                	row = Integer.parseInt(new_sms.substring(new_sms.indexOf(',') + 1, new_sms.lastIndexOf(',')));
-                	col = Integer.parseInt(new_sms.substring(new_sms.lastIndexOf(',') + 1));
-                	ViewController.getInstance().addGhost(row, col); // Agrega un nuevo fantasma al juego
-                    
-                } 
-            //} 
-                else {
+                } else if (action == 'G') {
+                    ViewController.getInstance().addGhost(row, col); // Agrega un nuevo fantasma al juego
+                }
+            } else {
                 System.out.println(new_sms);
             }
         }
@@ -84,3 +47,4 @@ public class Classify_Action {
     }
 
 }
+

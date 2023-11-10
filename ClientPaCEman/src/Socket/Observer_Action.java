@@ -3,30 +3,17 @@ package Socket;
 import game.ViewController;
 import Observer.ObserverController;
 
-/**
- * Observer action class
- * Esta clase es la encargada de interpretar los de tipo observador
- * @author Mauricio C.Yendry B. Gabriel V.
- */
+
 
 public class Observer_Action {
 
-    /**
-     * Variables utilizadas para almacenar los valores enviados por el socket
-     */
+    
 
     public static char action,fruit,client;
     public static int row, col,value,speed;
 
 
-    /**
-     * Método Observer_recv
-     * Este metodo recibe el string del mensaje que llega por el socket y procede
-     * a separarlo y clasificarlo para detectar la accion que le solicita el
-     * administrador y poder ejecutarla.
-     * @param new_sms Mensaje recibido por el socket
-     * @author Mauricio C.Yendry B. Gabriel V.
-     */
+    
 
     public static void observerRecv(String new_sms){
 
@@ -71,3 +58,4 @@ public class Observer_Action {
         }
     }
 }
+

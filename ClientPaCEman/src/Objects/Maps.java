@@ -55,7 +55,7 @@ public class Maps
 
         if(location == 2)// PILDORA
         {
-            imageIcon = new ImageIcon(this.getClass().getResource("/Resources/pill.png"));
+            imageIcon = new ImageIcon(this.getClass().getResource("/Resources/pill2.png"));
             image = imageIcon.getImage();
             return image;
         }

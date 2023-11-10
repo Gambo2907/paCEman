@@ -234,7 +234,7 @@ void messageReceive(char *messageType, int client){
     }
     else if(instruction == 'U'){
 
-        //sendMessage(messageType);
+        sendMessage(messageType);
     }
     else if(instruction == 'D'){
         if(client == 0){
