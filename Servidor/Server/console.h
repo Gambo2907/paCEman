@@ -3,7 +3,7 @@
 #define SERVER_CONSOLE_H
 
 #include <stdbool.h>
-
+#include "constants.h"
 int select_player();
 
 struct game{
@@ -22,7 +22,7 @@ struct position set_position();
 
 struct game createstructingame(int player);
 
-struct game ingame;
+struct game ingame[MAX_PLAYERS];
 
 struct fruit {
     struct position pos;

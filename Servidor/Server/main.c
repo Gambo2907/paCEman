@@ -188,14 +188,17 @@ void select_menu(int player) {
                 sendMessage(speed);
                 break;
             case 5:
-                if(ingame.clientnumber == player){
-                    printf("%i\n", ingame.points);
+                if(ingame->clientnumber == player){
+                    printf("%i\n", ingame[player].points);
                     break;
                 }
             case 6:
-                break;
+                if(ingame->clientnumber == player) {
+                    printf("%i\n", ingame[player].lives);
+                    break;
+                }
             case 7:
-                select_menu(player);
+                select_player();
 
             default:
                 select_menu(player);
@@ -219,6 +222,10 @@ void messageReceive(char *messageType, int client){
 
     if(player == 'P'){
         if(client > 1){
+            ingame[client].clientnumber = client;
+            ingame[client].points = 0;
+            ingame[client].lives = 3;
+            ingame[client].state = true;
             //printf("%s", "FUNCIONA >1");
             char user[3] = {'C','2','/'};
             //printf("%s", user);
@@ -226,6 +233,10 @@ void messageReceive(char *messageType, int client){
 
         }else{
             //printf("%s", "FUNCIONA C1");
+            ingame[client].clientnumber = client;
+            ingame[client].points = 0;
+            ingame[client].lives = 3;
+            ingame[client].state = true;
             char user[3] = {'C','1','/'};
             //printf("%s", user);
             sendMessage(user);
@@ -237,7 +248,7 @@ void messageReceive(char *messageType, int client){
         sendMessage(messageType);
     }
     else if(instruction == 'D'){
-        if(client == 0){
+        if(client == 1){
             char amountpoints[100];
             char *start = strchr(messageType, ',');
             char *end = strchr(messageType, '/');
@@ -245,12 +256,23 @@ void messageReceive(char *messageType, int client){
                 int length = end - start - 1;
                 strncpy(amountpoints, start + 1, length);
                 intValuePoints = strtol(amountpoints, NULL, 10);
-                ingame.points = intValuePoints;
-                ingame.clientnumber = 1;
+                ingame[client].points = intValuePoints;
+                
 
         }
+            }else{
+            char amountpoints[100];
+            char *start = strchr(messageType, ',');
+            char *end = strchr(messageType, '/');
+            if(start != NULL && end != NULL && end > start) {
+                int length = end - start - 1;
+                strncpy(amountpoints, start + 1, length);
+                intValuePoints = strtol(amountpoints, NULL, 10);
+                ingame[client].points = intValuePoints;
 
-            //printf("%i\n", ingame.points);
+            }
+
+                //printf("%i\n", ingame.points);
         }
 
     }
