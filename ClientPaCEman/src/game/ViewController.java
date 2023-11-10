@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import Socket.Classify_Action;
 import Socket.Client;
+import menu.MainMenu;
 import Objects.Maps;
 
 
@@ -250,7 +251,7 @@ public class ViewController extends JPanel implements ActionListener {
         if(!stop){
             setLivesScreen();
             if(getClientType() != 0) {
-                //send(getClientType() + "U" + "," + pacman.getBoxX() + "," + pacman.getBoxY() + "/"); //ENVIO DE INFO
+                
             }
             for(Characters character: characters){
                 verifyDirections(character);
@@ -302,16 +303,15 @@ public class ViewController extends JPanel implements ActionListener {
 
    
     public void eatDots(){
-        //Sistema para comer las bolas de laberinto pequeñas
+        //Sistema para comer los dots
         if(maps.getValue(pacman.getBoxX(), pacman.getBoxY()) == 1){
             maps.eatDot(pacman.getBoxX(),pacman.getBoxY());
             send(getClientType() + "D"+ "," + getScore() + "/"); //ENVIO INFO
-            //send(String.valueOf(getScore() ));
             eatDot.play();
             score += 10;
             dots--;
         }
-        //Sistema para comer las bolas de laberinto grandes
+        //Sistema para comer las pildoras
         if(maps.getValue(pacman.getBoxX(), pacman.getBoxY()) == 2){
             maps.eatDot(pacman.getBoxX(),pacman.getBoxY());
             // send("M" + getClientType() + "/"); ENVIO INFO
@@ -590,27 +590,32 @@ public class ViewController extends JPanel implements ActionListener {
         if(fruit == 'F'){
             maps.addFruit(row,col,8);
             setStrawberryScore(value);
+            repaint();
         }
         //naranja
         if(fruit == 'N'){
             maps.addFruit(row,col,7);
             setOrangeScore(value);
+            repaint();
         }
         //manzana
         if(fruit == 'M'){
             maps.addFruit(row,col,6);
             setAppleScore(value);
+            repaint();
         }
         //melon
         if(fruit == 'W'){
             maps.addFruit(row,col,5);
             setMelonScore(value);
+            repaint();
         }
 
         //cereza
         if(fruit == 'C'){
             maps.addFruit(row,col,4);
             setCherryScore(value);
+            repaint();
         }
     }
 
@@ -683,11 +688,14 @@ public class ViewController extends JPanel implements ActionListener {
                         System.out.println("Recibido: " + messageReceived);
                         Classify_Action.actionRecv(messageReceived);
                     } else {
+                    	System.out.println("Servidor desconectado.");
+                    	client.disconnect();
                         break;
                     }
                 }
-                System.out.println("Cliente desconectado.");
-                client.disconnect();
+                //System.out.println("Desconectado.");
+                //client.disconnect();
+                
             }
         });
         thread.start();
