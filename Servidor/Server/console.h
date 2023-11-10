@@ -13,12 +13,19 @@ struct game{
     bool state;
 
 };
+struct position {
+    int row;
+    int column;
+};
+
+struct position set_position();
 
 struct game createstructingame(int player);
 
 struct game ingame;
 
 struct fruit {
+    struct position pos;
     char fruit_type;
     int points;
 };
@@ -30,7 +37,7 @@ struct fruit add_fruit();
 
 int change_speed();
 
-void select_menu();
+void select_menu(int player);
 
 void init_console();
 
