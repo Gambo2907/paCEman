@@ -736,7 +736,7 @@ public class ViewController extends JPanel implements ActionListener {
             case 80:
                 stop();
                 break;
-            case 78:
+            case 10:
                 newGame();
                 break;
         }
