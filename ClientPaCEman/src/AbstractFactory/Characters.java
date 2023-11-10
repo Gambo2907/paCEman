@@ -1,8 +1,8 @@
-package Objects;
+package AbstractFactory;
 
 import game.ViewController;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.awt.*;
 
 public abstract class Characters

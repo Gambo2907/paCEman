@@ -1,4 +1,4 @@
-package Objects;
+package AbstractFactory;
 
 
 public class Clyde extends Ghost
@@ -9,14 +9,14 @@ public class Clyde extends Ghost
         super("/Resources/clyde.gif", x, y);
     }
 
-   
+    @Override
     public void finalPanic()
     {
         super.finalPanic();
         updateImage("/Resources/clyde.gif");
     }
 
-    
+    @Override
     public void death(){
         super.death();
         x = 540;
@@ -24,7 +24,7 @@ public class Clyde extends Ghost
         dx=dy=0;
     }
 
-    
+    @Override
     public void artificialIntelligence(int pacmanX, int pacmanY)
     {
         super.artificialIntelligence(pacmanX, pacmanY);

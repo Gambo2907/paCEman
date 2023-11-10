@@ -1,6 +1,12 @@
 package game;
 import Objects.*;
 
+
+import AbstractFactory.Characters;
+import AbstractFactory.Ghost;
+import AbstractFactory.GhostFactory;
+import AbstractFactory.SimpleGhostFactory;
+
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.*;
@@ -14,8 +20,18 @@ import Socket.Client;
 import menu.MainMenu;
 import Objects.Maps;
 
+import gnu.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class ViewController extends JPanel implements ActionListener {
+    private InputStream input;
+    private OutputStream output;
+    private SerialPort serialPort;
+
+
+    GhostFactory ghostFactory = new SimpleGhostFactory();
     private Timer timer;
     private int clientType;
     private Characters blinky, pinky, clyde ,inky;
@@ -39,6 +55,31 @@ public class ViewController extends JPanel implements ActionListener {
 
     
     public ViewController(){
+        //Arduino connection
+/**
+        try {
+            // Identifica el puerto serial de Arduino (cambia el nombre del puerto según tu configuración)
+            CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier("COM3");
+
+            if (portIdentifier.isCurrentlyOwned()) {
+                System.err.println("Error: El puerto está siendo utilizado");
+            } else {
+                CommPort commPort = portIdentifier.open(this.getClass().getName(), 2000);
+
+                if (commPort instanceof SerialPort) {
+                    serialPort = (SerialPort) commPort;
+                    serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+
+                    input = serialPort.getInputStream();
+                    output = serialPort.getOutputStream();
+                } else {
+                    System.err.println("Error: Solo se pueden utilizar puertos seriales");
+                }
+            }
+        } catch (PortInUseException | UnsupportedCommOperationException | IOException | gnu.io.NoSuchPortException e) {
+            e.printStackTrace();
+        }
+**/
         // Connection
         Client client = new Client("127.0.0.1", 19200);
         this.client = client; // instantiate a client
@@ -137,7 +178,7 @@ public class ViewController extends JPanel implements ActionListener {
     public void setGameSpeed(Integer gameSpeed) {this.gameSpeed = gameSpeed;}
 
 
-    
+
 
     public void newGame(){
 
@@ -179,7 +220,7 @@ public class ViewController extends JPanel implements ActionListener {
         death = Applet.newAudioClip(url3);
     }
 
-   
+
     public void paint(Graphics g)
     {
         super.paint(g);
@@ -246,8 +287,45 @@ public class ViewController extends JPanel implements ActionListener {
         }
     }
 
-    
+//ARDUINO
+    /**
+public void readFromArduino() {
+    try {
+        int availableBytes = input.available();
+        byte[] data = new byte[availableBytes];
+        int bytesRead = input.read(data);
+
+        if (bytesRead > 0) {
+            System.out.println(data[0]);
+            if(data[0]==52){
+                pacman.moveRight();
+            }else if(data[0]==50){
+                pacman.moveLeft();
+            }else if(data[0]==60){
+                pacman.moveUp();
+            }else if(data[0]==70){
+                pacman.moveDown();
+            }
+
+            String messageReceived = new String(data, 0, bytesRead);
+
+            System.out.println("Mensaje recibido de Arduino: " + messageReceived);
+
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+**/
     public void actionPerformed(ActionEvent e){
+        //ARDUINO
+        /**
+         try {
+         readFromArduino();
+         } catch (Exception ex) {
+         throw new RuntimeException(ex);
+         }
+         **/
         if(!stop){
             setLivesScreen();
             if(getClientType() != 0) {
@@ -624,27 +702,26 @@ public class ViewController extends JPanel implements ActionListener {
 
         if(maps.verifyBox(row,col)){
             if (getTotalGhost() == 0){
-                //Creamos Blinky
-                blinky = new Blinky(calcX(row),calcY(col));
+                blinky = ghostFactory.createGhostBlinky(calcX(row),calcY(col));
                 getCharacters().add(blinky);
                 setTotalGhost(1);
 
             }else if(getTotalGhost() == 1){
                 //Creamos Pinky
-                pinky = new Pinky(calcX(row),calcY(col));
+                pinky = ghostFactory.createGhostPinky(calcX(row),calcY(col));
                 getCharacters().add(pinky);
                 setTotalGhost(1);
 
             }else if(getTotalGhost() == 2) {
 
                 //Creamos Clyde
-                clyde = new Clyde(calcX(row),calcY(col));
+                clyde = ghostFactory.createGhostClyde(calcX(row),calcY(col));
                 getCharacters().add(clyde);
                 setTotalGhost(1);
 
             }else if(getTotalGhost() == 3){
                 //Creamos Inky
-                inky = new Inky(calcX(col),calcY(row));
+                inky = ghostFactory.createGhostInky(calcX(row),calcY(col));
                 getCharacters().add(inky);
                 setTotalGhost(1);
             }

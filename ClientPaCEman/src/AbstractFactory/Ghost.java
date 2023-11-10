@@ -1,4 +1,4 @@
-package Objects;
+package AbstractFactory;
 
 import java.util.Random;
 
@@ -12,7 +12,7 @@ public abstract class Ghost extends Characters
         super(path,x,y);
     }
 
-    
+
     public void panic()
     {
         super.updateImage("/Resources/panic_ghost.gif");
@@ -42,7 +42,7 @@ public abstract class Ghost extends Characters
         x=x-60;
         death = false;
     }
-    
+
     public void artificialIntelligence(int pacmanX, int pacmanY){
         random = new Random();
     }

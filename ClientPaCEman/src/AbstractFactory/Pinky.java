@@ -1,4 +1,4 @@
-package Objects;
+package AbstractFactory;
 
 
 public class Pinky extends Ghost
@@ -9,20 +9,20 @@ public class Pinky extends Ghost
         super("/Resources/pinky.gif", x, y);
     }
 
-    
+    @Override
     public void death(){
         super.death();
         x = 420;
         y = 300;
         dx=dy=0;
     }
-    
+    @Override
     public void finalPanic()
     {
         super.finalPanic();
         updateImage("/Resources/pinky.gif");
     }
-    
+    @Override
     public void artificialIntelligence(int pacmanX, int pacmanY){
         super.artificialIntelligence(pacmanX, pacmanY);
         int movement = random.nextInt(3);

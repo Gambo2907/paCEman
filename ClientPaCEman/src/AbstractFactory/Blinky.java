@@ -1,4 +1,4 @@
-package Objects;
+package AbstractFactory;
 
 
 public class Blinky extends Ghost {
@@ -8,14 +8,14 @@ public class Blinky extends Ghost {
             super("/Resources/blinky.gif", x, y);
         }
 
-       
+        @Override
         public void finalPanic()
         {
             super.finalPanic();
             updateImage("/Resources/blinky.gif");
         }
 
-        
+        @Override
         public void death(){
             super.death();
             x = 300;
@@ -23,7 +23,7 @@ public class Blinky extends Ghost {
             dx=dy=0;
         }
 
-        
+        @Override
         public void artificialIntelligence(int pacmanX, int pacmanY){
             super.artificialIntelligence(pacmanX, pacmanY);
             int movement = random.nextInt(3);

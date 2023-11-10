@@ -3,7 +3,10 @@ package Observer;
 import game.ViewController;
 import Socket.Client;
 import Socket.Observer_Action;
-
+import AbstractFactory.Characters;
+import AbstractFactory.Ghost;
+import AbstractFactory.GhostFactory;
+import AbstractFactory.SimpleGhostFactory;
 import javax.swing.*;
 
 import Objects.*;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 
 
 public class ObserverController extends JPanel implements ActionListener {
+    GhostFactory ghostFactory = new SimpleGhostFactory();
     private Timer timer;
     private int clientType;
     private Characters blinky, pinky, clyde ,inky;
@@ -645,29 +649,29 @@ public class ObserverController extends JPanel implements ActionListener {
         if(maps.verifyBox(row,col)){
             if (getTotalGhost() == 0){
                 //Creamos Blinky
-                blinky = new Blinky(calcX(row),calcY(col));
+                blinky = ghostFactory.createGhostBlinky(calcX(row),calcY(col));
                 getCharacters().add(blinky);
                 setTotalGhost(1);
 
             }else if(getTotalGhost() == 1){
                 //Creamos Pinky
-                pinky = new Pinky(calcX(row),calcY(col));
+                pinky = ghostFactory.createGhostPinky(calcX(row),calcY(col));
                 getCharacters().add(pinky);
                 setTotalGhost(1);
 
             }else if(getTotalGhost() == 2) {
-
                 //Creamos Clyde
-                clyde = new Clyde(calcX(row),calcY(col));
+                clyde = ghostFactory.createGhostClyde(calcX(row),calcY(col));
                 getCharacters().add(clyde);
                 setTotalGhost(1);
 
             }else if(getTotalGhost() == 3){
                 //Creamos Inky
-                inky = new Inky(calcX(col),calcY(row));
+                inky = ghostFactory.createGhostInky(calcX(row),calcY(col));
                 getCharacters().add(inky);
                 setTotalGhost(1);
             }
+
 
 
 
