@@ -208,6 +208,7 @@ public class ViewController extends JPanel implements ActionListener {
         life =true;
         success =false;
         score = 0;
+        pacman.setLives(3);
 
         //Genero los audios
         URL url = ViewController.class.getResource("/Resources/eatDot.wav");
@@ -264,6 +265,7 @@ public class ViewController extends JPanel implements ActionListener {
             ImageIcon imageIcon = new ImageIcon(this.getClass().getResource("/Resources/heart.png"));
             Image imageHeart = imageIcon.getImage();
             g2d.drawImage(imageHeart,i*60,maps.sizeMapX(), this);
+
         }
 
         //Opciones del método paint()
@@ -327,9 +329,11 @@ public void readFromArduino() {
          }
          **/
         if(!stop){
+
+
             if(getClientType() != 0) {
-                setLivesScreen();
             	send(getClientType() + "U"+  "," + pacman.getBoxX()+","+pacman.getBoxY() + "/");
+                newlives();
             }
             for(Characters character: characters){
                 verifyDirections(character);
@@ -369,15 +373,14 @@ public void readFromArduino() {
         
     }
     
-    public void setLivesScreen() {
-    	if(getScore()%1000 == 0 && getScore() != 0){
-        	
-        	pacman.setLives(pacman.pacmanLives() + 1);
-            send(getClientType() + "L" + "," + "1");  //ENVIO DE INFO
-            
+
+    public void newlives(){
+        if(getScore()%1000 == 0 && getScore() != 0){
+            int amountoflives = pacman.pacmanLives();
+            pacman.setLives( amountoflives + 1);
+            send(getClientType() + "L");  //ENVIO DE INFO
         }
     }
-
 
    
     public void eatDots(){

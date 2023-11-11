@@ -22,7 +22,8 @@ struct position set_position();
 
 struct game createstructingame(int player);
 
-struct game ingame[MAX_PLAYERS];
+struct game ingame;
+struct game ingame2;
 
 struct fruit {
     struct position pos;

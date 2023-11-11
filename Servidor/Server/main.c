@@ -98,6 +98,7 @@ int change_speed() {
 }
 
 void select_menu(int player) {
+
     int select;
     printf("Ingrese un numero para definir lo que desea hacer:\n");
     printf("1) Crear fantasma\n");
@@ -188,13 +189,20 @@ void select_menu(int player) {
                 sendMessage(speed);
                 break;
             case 5:
-                if(ingame->clientnumber == player){
-                    printf("%i\n", ingame[player].points);
+                if(player == 1) {
+
+                    printf("%s%i\n", "Los puntos son: ", ingame.points);
+                    break;
+                } else if(player == 2){
+                    printf("%s%i\n", "Los puntos son: ", ingame2.points);
                     break;
                 }
             case 6:
-                if(ingame->clientnumber == player) {
-                    printf("%i\n", ingame[player].lives);
+                if(player == 1) {
+                    printf("%s%i\n", "Las vidas son: ", ingame.lives);
+                    break;
+                } else if(player == 2){
+                    printf("%s%i\n", "Las vidas son: ", ingame2.lives);
                     break;
                 }
             case 7:
@@ -222,10 +230,10 @@ void messageReceive(char *messageType, int client){
 
     if(player == 'P'){
         if(client > 1){
-            ingame[client].clientnumber = client;
-            ingame[client].points = 0;
-            ingame[client].lives = 3;
-            ingame[client].state = true;
+            ingame2.clientnumber = client;
+            ingame2.points = 0;
+            ingame2.lives = 3;
+            ingame2.state = true;
             //printf("%s", "FUNCIONA >1");
             char user[3] = {'C','2','/'};
             //printf("%s", user);
@@ -233,10 +241,10 @@ void messageReceive(char *messageType, int client){
 
         }else{
             //printf("%s", "FUNCIONA C1");
-            ingame[client].clientnumber = client;
-            ingame[client].points = 0;
-            ingame[client].lives = 3;
-            ingame[client].state = true;
+            ingame.clientnumber = client;
+            ingame.points = 0;
+            ingame.lives = 3;
+            ingame.state = true;
             char user[3] = {'C','1','/'};
             //printf("%s", user);
             sendMessage(user);
@@ -256,7 +264,7 @@ void messageReceive(char *messageType, int client){
                 int length = end - start - 1;
                 strncpy(amountpoints, start + 1, length);
                 intValuePoints = strtol(amountpoints, NULL, 10);
-                ingame[client].points = intValuePoints;
+                ingame.points = intValuePoints;
                 
 
         }
@@ -268,14 +276,21 @@ void messageReceive(char *messageType, int client){
                 int length = end - start - 1;
                 strncpy(amountpoints, start + 1, length);
                 intValuePoints = strtol(amountpoints, NULL, 10);
-                ingame[client].points = intValuePoints;
+                ingame2.points = intValuePoints;
 
             }
 
-                //printf("%i\n", ingame.points);
+
         }
 
-    }
+    }else if(instruction == 'L'){
+        if(client == 1){
+            ingame.lives = ingame.lives + 1;
+            }
+        }else{
+            ingame2.lives = ingame2.lives + 1;
+
+            }
 }
 
 
@@ -287,18 +302,15 @@ static DWORD WINAPI serverThread(void *threadParams)
     return 0;
 }
 
-static DWORD WINAPI consoleThread(void *threadParams)
-{
 
-    return 0;
-}
 
 int main()
 {
+
     message[0] = '\0'; // Inicializa el mensaje que se envia a todos los clientes
     char input[BUFLEN];
     DWORD threadDescriptor;
-    //DWORD consoleThread;
+
     CreateThread(NULL, 0, serverThread, NULL, 0, &threadDescriptor); // Hilo para el servidor
 
     Sleep(1000);
